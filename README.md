@@ -1,4 +1,4 @@
-# Getting Started with Movie Website App
+# Getting Started with Geeky Noob Movie Web App
 
 Find all the required information about your favourite movie here🙌!!Millions of movies, TV shows and web series to discover. Explore now!!!!!😁😎 
 ## About
