@@ -67,6 +67,10 @@
  
   
 } 
+.searchBar{
+  background-color:#fff; 
+  border-radius: 2px;
+}
 .btn {
   color: #fff;
   background-color: #007bff;

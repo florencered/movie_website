@@ -1,5 +1,7 @@
 import React from 'react';
-import axios from 'axios';
+import axios from 'axios'; 
+import TextField from '@mui/material/TextField';
+import Autocomplete from '@mui/material/Autocomplete';
 
 import { useEffect } from 'react'; //imported use effect and use state hooks from react
 import { useState } from 'react';
@@ -8,7 +10,9 @@ const Movies = () => { //main fucntion movie
   const [loading, setLoading] = useState(true); //this state will be true as default
   const [movie, setMovie] = useState(null); //nothi
   const [error, setError] = useState(false);
-  const [input,setInput]=useState("")
+  const [input,setInput]=useState(""); 
+  const [myOptions, setMyOptions] = useState([])
+  
   const requestMovies = (path) => {
     
     const url = "https://api.themoviedb.org/3" + path + "api_key=" + api_key;
@@ -18,7 +22,14 @@ const Movies = () => { //main fucntion movie
         
         console.log("response", res.data);
         setMovie(res.data);
-        setLoading(false);
+        setLoading(false); 
+        for (var i = 0; i < res.data.results.length; i++) {
+          myOptions.push(res.data.results[i].title); 
+          
+        }
+        setMyOptions(myOptions);
+        // console.log(myOptions); why is the array being logged 60 times
+        
         
 
       }).catch((error) => {
@@ -27,8 +38,9 @@ const Movies = () => { //main fucntion movie
       })
 
   }
-  const handleChangeInput = (e) => {
-    setInput(e.target.value)
+  const handleChangeInput = (e) => { 
+    console.log("approached")
+    setInput(e.target.value);
     console.log(e.target.value);
 
   }
@@ -47,7 +59,8 @@ const Movies = () => { //main fucntion movie
 
   }
   useEffect(() => {
-    requestMovies("/trending/movie/day?");
+    requestMovies("/trending/movie/day?"); 
+  
 
   }, []);
 
@@ -56,22 +69,36 @@ const Movies = () => { //main fucntion movie
     <div className='wrapper'>
       <div className="search-bar">
 
-        <form>
-          <div class="form-group">
-            <input
-              type="text"
-              className="form-control"
-              // aria-describedby="emailHelp"
-              placeholder="Type your favourite movie"
-              onChange={handleChangeInput} value={input}
-            />
+        
+          <div className="form-group">
+          <div>
+     
+      <Autocomplete
+        style={{ width: 500 }}
+        freeSolo
+        autoComplete
+        autoHighlight
+        options={myOptions}
+        renderInput={(params) => (
+          <TextField {...params}
+            // onChange={requestMovies}
+            variant="standard"
+            label="Search Bar" 
+            className='searchBar' 
+            onChange={handleChangeInput} 
+            // value of onchange not read if approached via dropdown
+            value={input}
+          />
+        )}
+      />
+    </div>
 
           </div>
 
           <button type="submit" className="btn" onClick={handleSearch} >
             Search
           </button>
-        </form>
+       
 
 
       </div>
